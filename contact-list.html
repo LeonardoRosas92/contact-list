@@ -1,0 +1,103 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/elements/dom-repeat.html">
+
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<dom-module id="contact-list">
+  <template>
+      <style>
+          :host {
+            
+          }
+          paper-card {
+            --paper-card-header-image: {
+              width: 100%;
+              height: 50%;
+            }
+          }
+          .off {
+            background: #d2d2d2;
+          }
+          .container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+          }
+          .card {
+            width: 25%;
+            height: auto;
+            margin: 5px;
+          }
+
+          @media screen and (max-width: 500px) {
+            .card {
+              width: 50%;
+              height: auto;
+              margin: 5px;
+            }
+            
+          }
+          
+
+        </style>
+    <div class="container">
+      <dom-repeat items="[[users]]" as="user">
+        <template>
+            <paper-card image="[[user.image]]" class$="card [[user.status]]" animatedShadow="true" elevation="5">
+                <div class="card-content">
+                  <div class="cafe-header">Nombre: [[user.firstName]] [[user.lastName]]
+                  </div>
+                  <p class="cafe-light">
+                    Edad: [[user.age]]
+                  </p>
+                </div>
+                <div class="card-actions">
+                  <div class="horizontal justified">
+                    <paper-button on-tap="show" class="botton">Mostrar</paper-button>
+                  </div>
+                </div>
+              </paper-card>
+        </template>
+      </dom-repeat>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * `contact-list`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ContactList extends Polymer.Element {
+      static get is() { return 'contact-list'; }
+      static get properties() {
+        return {
+          users: {
+            type: Array,
+            value: []
+          },
+          size: {
+            type: Number,
+            computed: '_getUsersListSize(users)'
+          }
+        };
+      }
+      _getUsersListSize(users){
+        return users.filter(user => user.status === 'on').length;
+      }
+      show(event) {
+        this.dispatchEvent(new CustomEvent('user-selected', {
+          bubbles: false,
+          composed: false,
+          detail: event.model.user
+        }));
+      }
+    }
+
+    window.customElements.define(ContactList.is, ContactList);
+  </script>
+</dom-module>
