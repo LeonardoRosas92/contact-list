@@ -8,7 +8,7 @@
   <template>
       <style>
           :host {
-            
+            display: inline;
           }
           paper-card {
             --paper-card-header-image: {
@@ -41,8 +41,9 @@
           
 
         </style>
+        <h2>Hay [[size]] usuarios conectados</h2>
     <div class="container">
-      <dom-repeat items="[[users]]" as="user">
+      <dom-repeat items="[[users]]" as="user" id="repeat">
         <template>
             <paper-card image="[[user.image]]" class$="card [[user.status]]" animatedShadow="true" elevation="5">
                 <div class="card-content">
@@ -78,7 +79,8 @@
         return {
           users: {
             type: Array,
-            value: []
+            value: [],
+            observer: '_usersChanged'
           },
           size: {
             type: Number,
@@ -88,6 +90,10 @@
       }
       _getUsersListSize(users){
         return users.filter(user => user.status === 'on').length;
+      }
+      _usersChanged(){
+        const users = this.users;
+        this.$.repeat.items = users;
       }
       show(event) {
         this.dispatchEvent(new CustomEvent('user-selected', {
