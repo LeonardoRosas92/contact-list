@@ -19,6 +19,9 @@
           .off {
             background: #d2d2d2;
           }
+          .on {
+            background: #2EFE64;
+          }
           .container {
             display: flex;
             justify-content: space-around;
@@ -47,17 +50,12 @@
         <template>
             <paper-card image="[[user.image]]" class$="card [[user.status]]" animatedShadow="true" elevation="5">
                 <div class="card-content">
-                  <div class="cafe-header">Nombre: [[user.firstName]] [[user.lastName]]
+                  <div class="cafe-header">[[language.name]]: [[user.name]] [[user.lastName]]
                   </div>
                   <p class="cafe-light">
-                    Edad: [[user.age]]
+                      [[language.age]]: [[user.age]]
                   </p>
-                </div>
-                <div class="card-actions">
-                  <div class="horizontal justified">
-                    <paper-button on-tap="show" class="botton">Mostrar</paper-button>
-                  </div>
-                </div>
+                </div>  
               </paper-card>
         </template>
       </dom-repeat>
@@ -84,7 +82,11 @@
           },
           size: {
             type: Number,
-            computed: '_getUsersListSize(users)'
+            observer: '_getUsersListSize(users)'
+          },
+          language:{
+            type: Object,
+            value: [],
           }
         };
       }
