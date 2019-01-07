@@ -13,38 +13,24 @@
   </head>
   <body>
 
-    <test-fixture id="BasicTestFixture">
+    <test-fixture id="userSelected">
       <template>
-        <contact-list></contact-list>
-      </template>
-    </test-fixture>
-
-    <test-fixture id="ChangedPropertyTestFixture">
-      <template>
-        <contact-list prop1="new-prop1"></contact-list>
+        <contact-list ></contact-list>
       </template>
     </test-fixture>
 
     <script>
       suite('contact-list', () => {
-
-        test('instantiating the element with default properties works', () => {
-          const element = fixture('BasicTestFixture');
-          assert.equal(element.prop1, 'contact-list');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello contact-list!');
+ 
+        test('Event user Selected', (done) => {
+          const element = fixture('userSelected');
+          element.addEventListener('user-selected', (event) => {
+            assert.equal(event.detail,"admin"); 
+           
+            done();
+          })
+          element.show({model:{user:"admin"}});
         });
-
-        test('setting a property on the element works', () => {
-          // Create a test fixture
-          const element = fixture('ChangedPropertyTestFixture');
-          assert.equal(element.prop1, 'new-prop1');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello new-prop1!');
-        });
-
       });
     </script>
 
