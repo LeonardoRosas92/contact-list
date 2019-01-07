@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/LeonardoRosas92/contact-list.svg?branch=master)](https://travis-ci.org/LeonardoRosas92/contact-list)
+
 # \<contact-list\>
 
 This is a component that allows you to list an array of characters with your personal data
